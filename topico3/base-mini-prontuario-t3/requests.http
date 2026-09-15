@@ -1,0 +1,154 @@
+### Mini-Prontuário T3 — banco de testes manuais da API
+### Extensão: "REST Client" (humao.rest-client). Clique em "Send Request".
+### Os casos de FALHA ensinam tanto quanto os de sucesso — leia o esperado de cada um.
+
+@host = http://localhost:3000
+
+### ==========================================================
+### BLOCO 0 — Estado de chegada (tudo isto JÁ funciona)
+### ==========================================================
+
+### 1. O servidor está vivo?  -> 200
+GET {{host}}/api/health
+
+### 2. Listar pacientes  -> 200 + array em camelCase
+GET {{host}}/api/patients
+
+### 3. Buscar paciente existente  -> 200
+GET {{host}}/api/patients/1
+
+### 4. Paciente inexistente  -> 404 no contrato { error: { message, statusCode, details } }
+GET {{host}}/api/patients/9999
+
+### 5. Criar paciente válido  -> 201
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "Joana Ribeiro Alencar",
+  "birthDate": "1990-04-12",
+  "nationalId": "700012345678999"
+}
+
+### 6. FALHA PROPOSITAL: dois campos inválidos -> 400 com details listando name E birthDate
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "   ",
+  "birthDate": "12/04/1990",
+  "nationalId": "700012345678911"
+}
+
+### 7. FALHA PROPOSITAL: CNS repetido -> 201 na 1ª execução, 409 na 2ª (invariante N1)
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "Paciente Duplicado",
+  "birthDate": "1980-01-01",
+  "nationalId": "700012345678777"
+}
+
+### 8. Atendimentos do paciente 1  -> 200 (mais recente primeiro)
+GET {{host}}/api/patients/1/encounters
+
+### 9. Registrar atendimento  -> 201
+POST {{host}}/api/patients/1/encounters
+Content-Type: application/json
+
+{
+  "startedAt": "2026-09-14T09:30",
+  "chiefComplaint": "Cefaleia há três dias",
+  "notes": "Orientada hidratação e retorno em 7 dias."
+}
+
+### 10. FALHA PROPOSITAL: atendimento em paciente fantasma -> 404
+POST {{host}}/api/patients/9999/encounters
+Content-Type: application/json
+
+{
+  "startedAt": "2026-09-14T09:30",
+  "chiefComplaint": "Teste"
+}
+
+### 11. Prescrições do atendimento 1  -> 200
+GET {{host}}/api/encounters/1/medications
+
+### 12. Prescrever no atendimento 1  -> 201
+POST {{host}}/api/encounters/1/medications
+Content-Type: application/json
+
+{
+  "medication": "Paracetamol 750mg",
+  "dosage": "1 comprimido de 8/8h por 2 dias"
+}
+
+### 13. Upload da foto do paciente 1 -> 200 com photoUrl
+### Ajuste o caminho para uma imagem SUA (.jpg ou .png, < 2MB).
+POST {{host}}/api/patients/1/photo
+Content-Type: multipart/form-data; boundary=Fronteira
+
+--Fronteira
+Content-Disposition: form-data; name="photo"; filename="foto.jpg"
+Content-Type: image/jpeg
+
+< ./caminho/para/sua-foto.jpg
+--Fronteira--
+
+### ==========================================================
+### BLOCO AUTH — descomente conforme a trilha AUTH avança.
+### Estes são os ATAQUES que o sistema precisa resistir
+### (OWASP A01 Broken Access Control · A07 Auth Failures).
+### Os mesmos ataques existem automatizados em tests/auth.attacks.test.ts.
+### ==========================================================
+
+### A1. Registrar profissional -> 201 (senha JAMAIS volta na resposta)
+# POST {{host}}/api/auth/register
+# Content-Type: application/json
+#
+# {
+#   "name": "Dra. Lívia Andrade",
+#   "email": "livia@clinica.local",
+#   "password": "correto-cavalo-bateria-grampo",
+#   "role": "profissional"
+# }
+
+### A2. Login -> 200 com { token, user }. Copie o token para as próximas.
+# POST {{host}}/api/auth/login
+# Content-Type: application/json
+#
+# {
+#   "email": "livia@clinica.local",
+#   "password": "correto-cavalo-bateria-grampo"
+# }
+
+### A3. ATAQUE — sem token: registrar atendimento -> 401
+# POST {{host}}/api/patients/1/encounters
+# Content-Type: application/json
+#
+# { "startedAt": "2026-09-14T10:00", "chiefComplaint": "Sem crachá" }
+
+### A4. ATAQUE — token ADULTERADO (troque 2 letras do meio) -> 401
+# POST {{host}}/api/patients/1/encounters
+# Authorization: Bearer COLE.O-TOKEN-ADULTERADO.AQUI
+# Content-Type: application/json
+#
+# { "startedAt": "2026-09-14T10:00", "chiefComplaint": "Crachá falsificado" }
+
+### A5. ATAQUE — papel errado: recepcao tenta prescrever -> 403 (não 401!)
+# POST {{host}}/api/encounters/1/medications
+# Authorization: Bearer TOKEN-DA-RECEPCAO
+# Content-Type: application/json
+#
+# { "medication": "Não deveria", "dosage": "passar" }
+
+### A6. ATAQUE — login com senha errada -> 401 com mensagem que NÃO
+###     revela se o e-mail existe (enumeração de usuários)
+# POST {{host}}/api/auth/login
+# Content-Type: application/json
+#
+# { "email": "livia@clinica.local", "password": "senha-errada" }
+
+### A7. Token EXPIRADO -> 401. Para testar: JWT_EXPIRES_IN=5s no .env,
+###     faça login, espere 6 segundos, repita a A2 com o token velho.

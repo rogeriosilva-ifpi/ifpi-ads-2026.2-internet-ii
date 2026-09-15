@@ -1,0 +1,86 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-base);
+  line-height: 1.5;
+}
+
+.app-header {
+  background-color: var(--cor-superficie-escura);
+  color: var(--cor-texto-invertido);
+  padding-block: var(--espaco-5);
+}
+.app-header__eyebrow {
+  margin: 0; color: var(--cor-marca); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.app-header__title { margin: var(--espaco-1) 0 0; font-size: 1.5rem; font-weight: 700; }
+@media (min-width: 768px) { .app-header__title { font-size: 2rem; } }
+
+.app-main { padding-block: var(--espaco-5) var(--espaco-7); }
+
+/* --- formulário de nova prescrição --- */
+.med-form {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-5);
+}
+.med-form__title { margin: 0 0 var(--espaco-4); font-size: 1rem; font-weight: 700; }
+.med-form__grid {
+  display: grid; grid-template-columns: 1fr; gap: var(--espaco-3);
+}
+@media (min-width: 768px) {
+  .med-form__grid { grid-template-columns: repeat(3, 1fr); }
+}
+.med-form__feedback { margin: var(--espaco-3) 0 0; font-size: 0.875rem; min-height: 1.25rem; }
+.med-form__feedback--error { color: var(--cor-alerta-escura); }
+.med-form__feedback--success { color: var(--cor-marca-escura); }
+
+/* --- painel de detalhe --- */
+.detail-panel {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-2);
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-5);
+}
+
+/* --- lista e cartão --- */
+.result-counter { margin: 0 0 var(--espaco-4); color: var(--cor-texto-suave); font-size: 0.875rem; }
+
+.medication-list {
+  display: grid; grid-template-columns: 1fr; gap: var(--espaco-4);
+  margin: 0; padding: 0; list-style: none;
+}
+@media (min-width: 768px) { .medication-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { .medication-list { grid-template-columns: repeat(3, 1fr); } }
+
+.medication-card {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  cursor: pointer;
+}
+.medication-card:hover { box-shadow: var(--sombra-2); }
+.medication-card:focus-visible { outline: 3px solid var(--cor-marca); outline-offset: 2px; }
+.medication-card__name { margin: 0 0 var(--espaco-1); font-size: 1.0625rem; font-weight: 700; }
+.medication-card__meta { margin: 0; color: var(--cor-texto-suave); font-size: 0.875rem; }
+
+.empty-state {
+  background: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-6);
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+.empty-state__title { margin: 0 0 var(--espaco-2); color: var(--cor-texto); font-size: 1rem; font-weight: 700; }

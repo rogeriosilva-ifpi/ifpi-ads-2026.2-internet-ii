@@ -1,0 +1,85 @@
+### Variaveis
+@host = http://localhost:3000
+
+### 1. Health check
+GET {{host}}/api/health
+
+### 2. Listar pacientes
+GET {{host}}/api/patients
+
+### 3. Buscar paciente por id
+GET {{host}}/api/patients/1
+
+### 4. FALHA PROPOSITAL: paciente inexistente -> esperado 404
+GET {{host}}/api/patients/9999
+
+### 5. Cadastrar paciente
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "Paciente de Teste",
+  "birthDate": "1990-01-01",
+  "nationalId": "888888888888888"
+}
+
+### 6. FALHA PROPOSITAL: CNS repetido -> esperado 409
+### Rode o bloco 5 e depois este. O primeiro devolve 201, este devolve 409.
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "Paciente de Teste (duplicado)",
+  "birthDate": "1990-01-01",
+  "nationalId": "888888888888888"
+}
+
+### 7. FALHA PROPOSITAL: sem o campo obrigatorio name -> esperado 400
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "birthDate": "1990-01-01",
+  "nationalId": "111111111111111"
+}
+
+### 8. Listar atendimentos do paciente 1
+GET {{host}}/api/patients/1/encounters
+
+### 9. Registrar atendimento
+POST {{host}}/api/patients/1/encounters
+Content-Type: application/json
+
+{
+  "startedAt": "2026-09-02T10:00",
+  "chiefComplaint": "Consulta de rotina"
+}
+
+### 10. FALHA PROPOSITAL: paciente inexistente -> esperado 404
+GET {{host}}/api/patients/9999/encounters
+
+### ============================================================
+### A PARTIR DAQUI: blocos que so vao funcionar depois do
+### Encontro 2 (validacao, upload). Deixe comentado ate la.
+### ============================================================
+
+### 11. TODO 10/11: payload invalido -> esperado 400 com "details"
+# POST {{host}}/api/patients
+# Content-Type: application/json
+#
+# {
+#   "name": "",
+#   "birthDate": "data-invalida",
+#   "nationalId": "123"
+# }
+
+### 12. TODO 12/13: upload de foto (precisa de um arquivo .jpg local)
+# POST {{host}}/api/patients/1/photo
+# Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+#
+# ------WebKitFormBoundary
+# Content-Disposition: form-data; name="photo"; filename="foto.jpg"
+# Content-Type: image/jpeg
+#
+# < ./caminho/para/foto.jpg
+# ------WebKitFormBoundary--

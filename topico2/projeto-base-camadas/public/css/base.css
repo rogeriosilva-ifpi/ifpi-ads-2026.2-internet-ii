@@ -1,0 +1,13 @@
+* { box-sizing: border-box; }
+body { background: var(--color-bg); color: var(--color-text); font-family: system-ui, sans-serif; margin: 0; }
+.app-header { background: var(--color-primary); color: white; padding: var(--space-4) 0; }
+.app-header__eyebrow { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.85; margin: 0 0 4px; }
+.app-header__title { margin: 0; font-size: 1.6rem; }
+.app-main { padding: var(--space-4) 0; }
+.patient-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.patient-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--space-3); display: flex; gap: var(--space-3); align-items: center; }
+.patient-card__photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: var(--color-primary-soft); flex-shrink: 0; }
+.patient-card__name { font-weight: 600; margin: 0 0 2px; }
+.patient-card__meta { color: var(--color-muted); font-size: 0.85rem; margin: 0; }
+.form-error { color: var(--color-danger); background: var(--color-danger-soft); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin-bottom: var(--space-3); }
+.field-error { color: var(--color-danger); font-size: 0.8rem; margin-top: 2px; }

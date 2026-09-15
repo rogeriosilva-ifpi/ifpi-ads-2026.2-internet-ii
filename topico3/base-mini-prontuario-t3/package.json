@@ -1,0 +1,36 @@
+{
+  "name": "mini-prontuario-t3",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Projeto-fio do Topico 3 - Programacao para Internet II (IFPI): camadas, ORM e auth na era do dev com IA",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "db:reset": "tsx scripts/reset-db.ts",
+    "check": "tsc --noEmit",
+    "arch": "depcruise src --config .dependency-cruiser.cjs",
+    "test": "tsx --test tests/*.test.ts",
+    "gate": "bash gate.sh"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.1",
+    "argon2": "^0.44.0",
+    "better-sqlite3": "^11.5.0",
+    "dotenv": "^16.4.5",
+    "express": "^5.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^22.9.0",
+    "dependency-cruiser": "^16.10.0",
+    "prisma": "^6.16.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

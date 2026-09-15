@@ -1,0 +1,23 @@
+{
+  "name": "painel-medicacao",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Atividade de laboratorio - CRUD reativo - Programacao para Internet II (IFPI)",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "db:reset": "tsx scripts/reset-db.ts",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

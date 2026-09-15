@@ -1,0 +1,278 @@
+/* ============================================================
+   COMPONENTES DE DOMÍNIO
+   ------------------------------------------------------------
+   Nomenclatura BEM:
+     .bloco             -> o componente inteiro
+     .bloco__elemento   -> uma parte que só existe dentro dele
+     .bloco--modificador-> uma variação do bloco
+
+   Por que BEM? Porque o nome da classe responde sozinho a três
+   perguntas: de quem é, o que é, e em que estado está.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   BLOCO: patient-list
+   ------------------------------------------------------------ */
+.patient-list {
+  display: grid;
+  grid-template-columns: 1fr;          /* celular: 1 coluna */
+  gap: var(--espaco-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mobile-first em ação: partimos de 1 coluna e ACRESCENTAMOS
+   colunas conforme sobra espaço. Nenhuma regra é desfeita. */
+@media (min-width: 768px) {
+  .patient-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .patient-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   BLOCO: patient-card
+   ------------------------------------------------------------ */
+.patient-card {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  transition: box-shadow 150ms ease;
+}
+
+.patient-card:hover {
+  box-shadow: var(--sombra-2);
+}
+
+.patient-card__name {
+  margin: 0 0 var(--espaco-1);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.patient-card__meta {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+.patient-card__id {
+  font-family: var(--fonte-mono);
+  font-size: 0.8125rem;
+}
+
+/* Modificador: o cartão continua sendo um cartão, só que inativo.
+   Três sinais redundantes — cor, opacidade e traço — para não
+   depender apenas da cor. */
+.patient-card--inactive {
+  background-color: #fbfbfc;
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.patient-card--inactive .patient-card__name {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+
+/* ------------------------------------------------------------
+   BLOCO: status-badge
+   ------------------------------------------------------------ */
+.status-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: var(--espaco-1) var(--espaco-3);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.status-badge--active {
+  background-color: var(--cor-marca-suave);
+  color: var(--cor-marca-escura);
+}
+
+.status-badge--inactive {
+  background-color: var(--cor-alerta-suave);
+  color: var(--cor-alerta-escura);
+}
+
+/* ------------------------------------------------------------
+   BLOCO: empty-state
+   ------------------------------------------------------------ */
+.empty-state {
+  background-color: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-6);
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+
+.empty-state__title {
+  margin: 0 0 var(--espaco-2);
+  color: var(--cor-texto);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------
+   BLOCO: patient-form
+   ------------------------------------------------------------ */
+.patient-form {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-5);
+}
+
+.patient-form__title {
+  margin: 0 0 var(--espaco-4);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.patient-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;      /* celular: campos empilhados */
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 768px) {
+  .patient-form__grid {
+    grid-template-columns: 2fr 1fr 1.5fr;
+  }
+}
+
+.patient-form__feedback {
+  margin: var(--espaco-3) 0 0;
+  font-size: 0.875rem;
+  min-height: 1.25rem;
+}
+
+.patient-form__feedback--error {
+  color: var(--cor-alerta-escura);
+}
+
+.patient-form__feedback--success {
+  color: var(--cor-marca-escura);
+}
+
+/* ------------------------------------------------------------
+   BLOCO: detail-panel
+   ------------------------------------------------------------ */
+.detail-panel {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-2);
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-5);
+}
+
+.detail-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.detail-panel__eyebrow {
+  margin: 0;
+  color: var(--cor-marca-escura);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detail-panel__title {
+  margin: var(--espaco-1) 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.detail-panel__subtitle {
+  margin: var(--espaco-5) 0 var(--espaco-3);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.detail-panel__form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 768px) {
+  .detail-panel__form {
+    grid-template-columns: 1fr 2fr 2fr;
+  }
+}
+
+/* ------------------------------------------------------------
+   BLOCO: encounter-list / encounter-item
+   ------------------------------------------------------------ */
+.encounter-list {
+  display: grid;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.encounter-item {
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  padding: var(--espaco-3);
+}
+
+.encounter-item__date {
+  margin: 0 0 var(--espaco-1);
+  color: var(--cor-texto-suave);
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+}
+
+.encounter-item__complaint {
+  margin: 0;
+  font-weight: 700;
+}
+
+.encounter-item__notes {
+  margin: var(--espaco-2) 0 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+/* O cartão vira clicável no gabarito da atividade. */
+.patient-card[data-patient-id] {
+  cursor: pointer;
+}
+
+.patient-card[data-patient-id]:focus-visible {
+  outline: 3px solid var(--cor-marca);
+  outline-offset: 2px;
+}
+
+.patient-card__counter {
+  margin: var(--espaco-2) 0 0;
+  color: var(--cor-marca-escura);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}

@@ -1,0 +1,7 @@
+node_modules/
+database/*.db
+database/*.db-journal
+uploads/*
+!uploads/.gitkeep
+.DS_Store
+.vscode/

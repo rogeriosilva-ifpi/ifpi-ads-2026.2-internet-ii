@@ -1,0 +1,122 @@
+/* ============================================================
+   COMPONENTES DE DOMÍNIO
+   ------------------------------------------------------------
+   Nomenclatura BEM:
+     .bloco             -> o componente inteiro
+     .bloco__elemento   -> uma parte que só existe dentro dele
+     .bloco--modificador-> uma variação do bloco
+
+   Por que BEM? Porque o nome da classe responde sozinho a três
+   perguntas: de quem é, o que é, e em que estado está.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   BLOCO: patient-list
+   ------------------------------------------------------------ */
+.patient-list {
+  display: grid;
+  grid-template-columns: 1fr;          /* celular: 1 coluna */
+  gap: var(--espaco-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ============================================================
+   TODO CSS-1 (Encontro 1, Prática 3)
+   Faça a lista virar 2 colunas a partir de 768px e 3 colunas
+   a partir de 1200px.
+
+   Dica: use `grid-template-columns: repeat(2, 1fr);` dentro de
+   uma media query `min-width`. Mobile-first: a media query
+   ACRESCENTA regra, nunca desfaz a anterior.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   BLOCO: patient-card
+   ------------------------------------------------------------ */
+.patient-card {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  transition: box-shadow 150ms ease;
+}
+
+.patient-card:hover {
+  box-shadow: var(--sombra-2);
+}
+
+.patient-card__name {
+  margin: 0 0 var(--espaco-1);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.patient-card__meta {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+.patient-card__id {
+  font-family: var(--fonte-mono);
+  font-size: 0.8125rem;
+}
+
+/* ============================================================
+   TODO CSS-2 (Encontro 1, Prática 3)
+   Crie o modificador `.patient-card--inactive`.
+
+   Ele deve deixar claro, SEM depender só da cor, que o paciente
+   está inativo. Sugestões: fundo levemente acinzentado, opacidade
+   reduzida e borda tracejada.
+
+   Cor sozinha não comunica: 8% dos homens têm alguma deficiência
+   na percepção de cores. Sempre combine cor + forma ou cor + texto.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   BLOCO: status-badge
+   ------------------------------------------------------------ */
+.status-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: var(--espaco-1) var(--espaco-3);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.status-badge--active {
+  background-color: var(--cor-marca-suave);
+  color: var(--cor-marca-escura);
+}
+
+.status-badge--inactive {
+  background-color: var(--cor-alerta-suave);
+  color: var(--cor-alerta-escura);
+}
+
+/* ------------------------------------------------------------
+   BLOCO: empty-state
+   ------------------------------------------------------------ */
+.empty-state {
+  background-color: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-6);
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+
+.empty-state__title {
+  margin: 0 0 var(--espaco-2);
+  color: var(--cor-texto);
+  font-size: 1rem;
+  font-weight: 700;
+}

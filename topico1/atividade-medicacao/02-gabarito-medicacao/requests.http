@@ -1,0 +1,61 @@
+### Painel de Medicação — casos de teste da API
+### Extensão necessária: "REST Client" (humao.rest-client)
+
+@host = http://localhost:3000
+
+### 1. O servidor está vivo?  -> esperado 200
+GET {{host}}/api/health
+
+### 2. Listar prescrições  -> esperado 200 + array (3 registros do seed)
+GET {{host}}/api/medications
+
+### 3. Buscar uma prescrição que existe  -> esperado 200
+GET {{host}}/api/medications/1
+
+### 4. Buscar uma prescrição que NÃO existe  -> esperado 404
+GET {{host}}/api/medications/9999
+
+### 5. Criar prescrição válida  -> esperado 201
+POST {{host}}/api/medications
+Content-Type: application/json
+
+{
+  "patientName": "Igor Bastos Teixeira",
+  "medicationName": "Amoxicilina",
+  "dosage": "875mg",
+  "route": "Oral",
+  "scheduledAt": "2026-09-10T18:00"
+}
+
+### 6. FALHA PROPOSITAL: sem patientName  -> esperado 400
+POST {{host}}/api/medications
+Content-Type: application/json
+
+{
+  "medicationName": "Amoxicilina",
+  "dosage": "875mg",
+  "route": "Oral",
+  "scheduledAt": "2026-09-10T18:00"
+}
+
+### 7. FALHA PROPOSITAL: horário fora do formato  -> esperado 400
+POST {{host}}/api/medications
+Content-Type: application/json
+
+{
+  "patientName": "Teste",
+  "medicationName": "X",
+  "dosage": "1mg",
+  "route": "Oral",
+  "scheduledAt": "10/09/2026 18:00"
+}
+
+### 8. Remover uma prescrição que existe  -> esperado 204 (sem corpo)
+### Troque o :id pelo id devolvido no passo 5 antes de rodar
+DELETE {{host}}/api/medications/4
+
+### 9. Remover uma prescrição que já não existe  -> esperado 404
+DELETE {{host}}/api/medications/9999
+
+### 10. Confirmar que sumiu da lista
+GET {{host}}/api/medications

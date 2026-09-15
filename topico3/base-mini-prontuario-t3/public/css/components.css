@@ -1,0 +1,461 @@
+/* ============================================================
+   COMPONENTES DE DOMÍNIO
+   ------------------------------------------------------------
+   Nomenclatura BEM:
+     .bloco             -> o componente inteiro
+     .bloco__elemento   -> uma parte que só existe dentro dele
+     .bloco--modificador-> uma variação do bloco
+
+   Por que BEM? Porque o nome da classe responde sozinho a três
+   perguntas: de quem é, o que é, e em que estado está.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   BLOCO: patient-list
+   ------------------------------------------------------------ */
+.patient-list {
+  display: grid;
+  grid-template-columns: 1fr;          /* celular: 1 coluna */
+  gap: var(--espaco-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mobile-first em ação: partimos de 1 coluna e ACRESCENTAMOS
+   colunas conforme sobra espaço. Nenhuma regra é desfeita. */
+@media (min-width: 768px) {
+  .patient-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .patient-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ------------------------------------------------------------
+   BLOCO: patient-card
+   ------------------------------------------------------------ */
+.patient-card {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  transition: box-shadow 150ms ease;
+}
+
+.patient-card:hover {
+  box-shadow: var(--sombra-2);
+}
+
+.patient-card__name {
+  margin: 0 0 var(--espaco-1);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.patient-card__meta {
+  margin: 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+.patient-card__id {
+  font-family: var(--fonte-mono);
+  font-size: 0.8125rem;
+}
+
+/* Modificador: o cartão continua sendo um cartão, só que inativo.
+   Três sinais redundantes — cor, opacidade e traço — para não
+   depender apenas da cor. */
+.patient-card--inactive {
+  background-color: #fbfbfc;
+  border-style: dashed;
+  opacity: 0.72;
+}
+
+.patient-card--inactive .patient-card__name {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+
+/* ------------------------------------------------------------
+   BLOCO: status-badge
+   ------------------------------------------------------------ */
+.status-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: var(--espaco-1) var(--espaco-3);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.status-badge--active {
+  background-color: var(--cor-marca-suave);
+  color: var(--cor-marca-escura);
+}
+
+.status-badge--inactive {
+  background-color: var(--cor-alerta-suave);
+  color: var(--cor-alerta-escura);
+}
+
+/* ------------------------------------------------------------
+   BLOCO: empty-state
+   ------------------------------------------------------------ */
+.empty-state {
+  background-color: var(--cor-superficie);
+  border: 1px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-6);
+  text-align: center;
+  color: var(--cor-texto-suave);
+}
+
+.empty-state__title {
+  margin: 0 0 var(--espaco-2);
+  color: var(--cor-texto);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------
+   BLOCO: patient-form
+   ------------------------------------------------------------ */
+.patient-form {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  box-shadow: var(--sombra-1);
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-5);
+}
+
+.patient-form__title {
+  margin: 0 0 var(--espaco-4);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.patient-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;      /* celular: campos empilhados */
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 768px) {
+  .patient-form__grid {
+    grid-template-columns: 2fr 1fr 1.5fr;
+  }
+}
+
+.patient-form__feedback {
+  margin: var(--espaco-3) 0 0;
+  font-size: 0.875rem;
+  min-height: 1.25rem;
+}
+
+.patient-form__feedback--error {
+  color: var(--cor-alerta-escura);
+}
+
+.patient-form__feedback--success {
+  color: var(--cor-marca-escura);
+}
+
+/* ------------------------------------------------------------
+   BLOCO: detail-panel
+   ------------------------------------------------------------ */
+.detail-panel {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  box-shadow: var(--sombra-2);
+  padding: var(--espaco-4);
+  margin-bottom: var(--espaco-5);
+}
+
+.detail-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-4);
+}
+
+.detail-panel__eyebrow {
+  margin: 0;
+  color: var(--cor-marca-escura);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detail-panel__title {
+  margin: var(--espaco-1) 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.detail-panel__subtitle {
+  margin: var(--espaco-5) 0 var(--espaco-3);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.detail-panel__form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaco-3);
+}
+
+@media (min-width: 768px) {
+  .detail-panel__form {
+    grid-template-columns: 1fr 2fr 2fr;
+  }
+}
+
+/* ------------------------------------------------------------
+   BLOCO: encounter-list / encounter-item
+   ------------------------------------------------------------ */
+.encounter-list {
+  display: grid;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.encounter-item {
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  padding: var(--espaco-3);
+}
+
+.encounter-item__date {
+  margin: 0 0 var(--espaco-1);
+  color: var(--cor-texto-suave);
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+}
+
+.encounter-item__complaint {
+  margin: 0;
+  font-weight: 700;
+}
+
+.encounter-item__notes {
+  margin: var(--espaco-2) 0 0;
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+/* O cartão vira clicável no gabarito da atividade. */
+.patient-card[data-patient-id] {
+  cursor: pointer;
+}
+
+.patient-card[data-patient-id]:focus-visible {
+  outline: 3px solid var(--cor-marca);
+  outline-offset: 2px;
+}
+
+.patient-card__counter {
+  margin: var(--espaco-2) 0 0;
+  color: var(--cor-marca-escura);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   NOVOS COMPONENTES DO TÓPICO 3
+   (sessão/identidade, login, foto, prescrições)
+   ============================================================ */
+
+/* --- Feedbacks por atributo data-tone (padrão do app.js) --- */
+.patient-form__feedback[data-tone="error"],
+.medication-list__feedback[data-tone="error"] {
+  color: var(--cor-alerta-escura);
+}
+
+.patient-form__feedback[data-tone="success"] {
+  color: var(--cor-marca-escura);
+}
+
+/* --- Barra de sessão (canto do cabeçalho) --- */
+.session-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.session-bar__name {
+  color: var(--cor-texto-invertido);
+  font-weight: 600;
+}
+
+.session-bar__open-mode {
+  color: var(--cor-texto-invertido);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+  border-radius: var(--raio-md);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* --- Crachá de papel (role) --- */
+.role-badge {
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.role-badge--admin        { background: #efe6ff; color: #4b2a9d; }
+.role-badge--profissional { background: var(--cor-marca-suave); color: var(--cor-marca-escura); }
+.role-badge--recepcao     { background: #e3edff; color: #1d4ea8; }
+
+/* --- Cartão de login --- */
+.login-card {
+  max-width: 26rem;
+  margin: 3rem auto;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-4);
+  box-shadow: var(--sombra-2);
+}
+
+.login-card__title {
+  font-size: 1.35rem;
+  margin-bottom: var(--espaco-1);
+}
+
+.login-card__hint {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+  margin-bottom: var(--espaco-3);
+}
+
+/* --- Avatar na lista --- */
+.patient-card__avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid var(--cor-borda);
+}
+
+.patient-card__avatar--empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-marca-suave);
+  color: var(--cor-marca-escura);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* --- Foto no painel de detalhe --- */
+.detail-panel__photo {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--raio-md);
+  object-fit: cover;
+  border: 2px solid var(--cor-borda);
+}
+
+.detail-panel__photo--empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-fundo);
+  color: var(--cor-texto-suave);
+  font-size: 0.75rem;
+}
+
+.photo-uploader {
+  margin-top: var(--espaco-3);
+  padding: var(--espaco-3);
+  background: var(--cor-fundo);
+  border-radius: var(--raio-md);
+}
+
+.photo-uploader__row {
+  display: flex;
+  gap: var(--espaco-2);
+  align-items: center;
+}
+
+/* --- Prescrições dentro de um atendimento --- */
+.encounter-item__toggle {
+  font-size: 0.85rem;
+}
+
+.encounter-item__medications {
+  margin-top: var(--espaco-2);
+  padding: var(--espaco-2) var(--espaco-3);
+  background: var(--cor-fundo);
+  border-left: 3px solid var(--cor-marca);
+  border-radius: var(--raio-sm);
+}
+
+.medication-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--espaco-2);
+  display: grid;
+  gap: var(--espaco-1);
+}
+
+.medication-list__title {
+  font-size: 0.95rem;
+  margin: 0 0 var(--espaco-1);
+}
+
+.medication-list__feedback {
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+  margin: 0 0 var(--espaco-1);
+}
+
+.medication-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+  align-items: baseline;
+}
+
+.medication-item__name {
+  font-weight: 600;
+}
+
+.medication-item__dosage {
+  color: var(--cor-texto-suave);
+  font-size: 0.88rem;
+}
+
+.medication-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--espaco-2);
+  margin-top: var(--espaco-2);
+}
+
+@media (max-width: 640px) {
+  .medication-form {
+    grid-template-columns: 1fr;
+  }
+}

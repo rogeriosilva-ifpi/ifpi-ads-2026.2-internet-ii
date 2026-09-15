@@ -1,0 +1,52 @@
+/* ============================================================
+   DESIGN TOKENS
+   ------------------------------------------------------------
+   Um token é uma decisão de design com nome.
+   Regra da disciplina: nenhum valor "mágico" espalhado pelo CSS.
+   Se você digitou #2f855a no meio de um componente, criou um
+   valor mágico. Se digitou var(--cor-sucesso), criou vocabulário.
+   ============================================================ */
+:root {
+  /* --- Cor: superfícies --- */
+  --cor-fundo:            #f6f7f9;
+  --cor-superficie:       #ffffff;
+  --cor-superficie-escura:#12151a;
+
+  /* --- Cor: texto --- */
+  --cor-texto:            #12151a;
+  --cor-texto-suave:      #5f6b7a;
+  --cor-texto-invertido:  #ffffff;
+
+  /* --- Cor: semântica --- */
+  --cor-marca:            #12b981;
+  --cor-marca-suave:      #d6f5e9;
+  --cor-marca-escura:     #0b6b4f;
+  --cor-alerta:           #ff6b4a;
+  --cor-alerta-suave:     #ffe4dc;
+  --cor-alerta-escura:    #a33518;
+
+  /* --- Cor: traços --- */
+  --cor-borda:            #d9dee6;
+
+  /* --- Espaçamento: escala de 4px. Nunca invente um valor fora dela. --- */
+  --espaco-1: 0.25rem;   /*  4px */
+  --espaco-2: 0.5rem;    /*  8px */
+  --espaco-3: 0.75rem;   /* 12px */
+  --espaco-4: 1rem;      /* 16px */
+  --espaco-5: 1.5rem;    /* 24px */
+  --espaco-6: 2rem;      /* 32px */
+  --espaco-7: 3rem;      /* 48px */
+
+  /* --- Forma --- */
+  --raio-sm: 6px;
+  --raio-md: 12px;
+  --raio-lg: 18px;
+
+  /* --- Elevação --- */
+  --sombra-1: 0 1px 2px rgba(18, 21, 26, 0.06);
+  --sombra-2: 0 6px 18px rgba(18, 21, 26, 0.08);
+
+  /* --- Tipografia --- */
+  --fonte-base: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fonte-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+}

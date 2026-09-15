@@ -1,0 +1,77 @@
+/* ============================================================
+   BASE - reset leve, tipografia e o esqueleto da página.
+   Aqui NÃO entra estilo de componente. Só o alicerce.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-base);
+  line-height: 1.5;
+}
+
+/* --- Cabeçalho da aplicação --- */
+.app-header {
+  background-color: var(--cor-superficie-escura);
+  color: var(--cor-texto-invertido);
+  padding-block: var(--espaco-5);
+}
+
+.app-header__eyebrow {
+  margin: 0;
+  color: var(--cor-marca);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.app-header__title {
+  margin: var(--espaco-1) 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Mobile-first: o tamanho maior só entra quando há espaço para ele. */
+@media (min-width: 768px) {
+  .app-header__title {
+    font-size: 2rem;
+  }
+}
+
+.app-main {
+  padding-block: var(--espaco-5) var(--espaco-7);
+}
+
+/* --- Barra de ferramentas --- */
+.toolbar {
+  display: flex;
+  flex-direction: column;      /* celular: um abaixo do outro */
+  gap: var(--espaco-4);
+  margin-bottom: var(--espaco-4);
+}
+
+@media (min-width: 768px) {
+  .toolbar {
+    flex-direction: row;       /* tablet em diante: lado a lado */
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .toolbar__search {
+    flex: 1 1 420px;
+  }
+}
+
+.result-counter {
+  margin: 0 0 var(--espaco-4);
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}

@@ -1,0 +1,100 @@
+### Mini-Prontuario - banco de testes da API
+### Extensao necessaria: "REST Client" (humao.rest-client)
+### Clique em "Send Request" acima de cada bloco.
+
+@host = http://localhost:3000
+
+### 1. O servidor esta vivo?  -> esperado 200
+GET {{host}}/api/health
+
+### 2. Listar pacientes  -> esperado 200 + array
+GET {{host}}/api/patients
+
+### 3. Buscar um paciente que existe  -> esperado 200
+GET {{host}}/api/patients/1
+
+### 4. Buscar um paciente que NAO existe  -> esperado 404
+GET {{host}}/api/patients/9999
+
+### 5. Criar paciente valido  -> esperado 201
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "Joana Ribeiro Alencar",
+  "birthDate": "1990-04-12",
+  "nationalId": "700012345678999"
+}
+
+### 6. FALHA PROPOSITAL: sem name  -> esperado 400
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "birthDate": "1990-04-12",
+  "nationalId": "700012345678911"
+}
+
+### 7. FALHA PROPOSITAL: name so com espacos  -> esperado 400
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "     ",
+  "birthDate": "1990-04-12",
+  "nationalId": "700012345678912"
+}
+
+### 8. FALHA PROPOSITAL: data fora do formato  -> esperado 400
+POST {{host}}/api/patients
+Content-Type: application/json
+
+{
+  "name": "Teste Data Errada",
+  "birthDate": "12/04/1990",
+  "nationalId": "700012345678913"
+}
+
+### 9. FALHA PROPOSITAL: sem Content-Type
+### Sem o cabecalho, express.json() nao le o corpo -> req.body fica vazio
+POST {{host}}/api/patients
+
+{
+  "name": "Teste Sem Content-Type",
+  "birthDate": "1990-04-12",
+  "nationalId": "700012345678914"
+}
+
+### ==========================================================
+### ATIVIDADE - Encounters
+### ==========================================================
+
+### 10. Listar atendimentos do paciente 1  -> esperado 200
+GET {{host}}/api/patients/1/encounters
+
+### 11. Criar atendimento  -> esperado 201
+POST {{host}}/api/patients/1/encounters
+Content-Type: application/json
+
+{
+  "startedAt": "2026-08-17T09:30",
+  "chiefComplaint": "Cefaleia ha tres dias",
+  "notes": "Orientada hidratacao e retorno em 7 dias."
+}
+
+### 12. FALHA PROPOSITAL: sem chiefComplaint  -> esperado 400
+POST {{host}}/api/patients/1/encounters
+Content-Type: application/json
+
+{
+  "startedAt": "2026-08-17T09:30"
+}
+
+### 13. FALHA PROPOSITAL: paciente inexistente  -> esperado 404
+POST {{host}}/api/patients/9999/encounters
+Content-Type: application/json
+
+{
+  "startedAt": "2026-08-17T09:30",
+  "chiefComplaint": "Teste"
+}

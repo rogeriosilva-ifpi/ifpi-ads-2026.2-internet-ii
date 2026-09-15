@@ -1,0 +1,30 @@
+/* Mesmos tokens da Semana 01 — reaproveitamento deliberado. */
+:root {
+  --cor-fundo:            #f6f7f9;
+  --cor-superficie:       #ffffff;
+  --cor-superficie-escura:#12151a;
+  --cor-texto:            #12151a;
+  --cor-texto-suave:      #5f6b7a;
+  --cor-texto-invertido:  #ffffff;
+  --cor-marca:            #12b981;
+  --cor-marca-suave:      #d6f5e9;
+  --cor-marca-escura:     #0b6b4f;
+  --cor-alerta:           #ff6b4a;
+  --cor-alerta-suave:     #ffe4dc;
+  --cor-alerta-escura:    #a33518;
+  --cor-borda:            #d9dee6;
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 0.75rem;
+  --espaco-4: 1rem;
+  --espaco-5: 1.5rem;
+  --espaco-6: 2rem;
+  --espaco-7: 3rem;
+  --raio-sm: 6px;
+  --raio-md: 12px;
+  --raio-lg: 18px;
+  --sombra-1: 0 1px 2px rgba(18, 21, 26, 0.06);
+  --sombra-2: 0 6px 18px rgba(18, 21, 26, 0.08);
+  --fonte-base: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --fonte-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+}
