@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { Contador } from './components/Contador'
 
 function App() {
 
@@ -59,6 +60,7 @@ function App() {
             </p>
           }
         </div>
+        <Contador />
       </main>
       <footer>2026 - IFPI ADS</footer>
     </>
