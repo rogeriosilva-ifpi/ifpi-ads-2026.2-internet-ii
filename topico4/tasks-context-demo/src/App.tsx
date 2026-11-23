@@ -1,19 +1,20 @@
+import { ThemeProvider } from './context/ThemeContext';
 import { TasksProvider } from './context/TasksContext';
+import Layout from './components/Layout';
 import Header from './components/Header';
 import TaskBoard from './components/TaskBoard';
 
-// ✅ VERSÃO "DEPOIS": CONTEXT API
-// O App não guarda estado nem passa props.
-// Só "liga" o provedor em volta da árvore.
+// Vários contextos convivem: cada um com UMA responsabilidade.
+// A ordem dos providers só importa se um depender do outro.
 export default function App() {
   return (
-    <TasksProvider>
-      <div className="app">
-        <div className="container">
+    <ThemeProvider>
+      <TasksProvider>
+        <Layout>
           <Header />
           <TaskBoard />
-        </div>
-      </div>
-    </TasksProvider>
+        </Layout>
+      </TasksProvider>
+    </ThemeProvider>
   );
 }

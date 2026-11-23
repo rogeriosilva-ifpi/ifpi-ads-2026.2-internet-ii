@@ -1,11 +1,14 @@
 import TaskCounter from './TaskCounter';
+import ThemeToggle from './ThemeToggle';
 
-// Header não recebe mais props que não usa (e não precisa de tipo de props).
 export default function Header() {
   return (
     <header className="header">
       <h1>📋 Minhas Tarefas</h1>
-      <TaskCounter />
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <TaskCounter />
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
