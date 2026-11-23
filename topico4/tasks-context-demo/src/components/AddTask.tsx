@@ -1,17 +1,18 @@
 import { useState, type FormEvent } from 'react';
+import { useTasksDispatch } from '../context/TasksContext';
 
-type AddTaskProps = {
-  onAddTask: (text: string) => void;
-};
+let nextId = 5;
 
-// ✅ Usa onAddTask (veio de App → TaskBoard → AddTask)
-export default function AddTask({ onAddTask }: AddTaskProps) {
+// Só precisa disparar ações → consome apenas o dispatch.
+export default function AddTask() {
   const [text, setText] = useState('');
+  const dispatch = useTasksDispatch();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!text.trim()) return;
-    onAddTask(text.trim());
+    // O TS valida o formato da ação: tente trocar 'added' por 'add'.
+    dispatch({ type: 'added', id: nextId++, text: text.trim() });
     setText('');
   }
 
