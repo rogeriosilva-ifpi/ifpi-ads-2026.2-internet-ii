@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import type { Task } from '../types';
+import { useTasksDispatch } from '../context/TasksContext';
 import TaskActions from './TaskActions';
 
 type TaskItemProps = {
   task: Task;
-  onChangeTask: (task: Task) => void;
-  onDeleteTask: (taskId: number) => void; // 🚚 só repassa
 };
 
-// TaskItem usa onChangeTask (checkbox e edição)
-// 🚚 ...mas onDeleteTask ele só REPASSA para TaskActions.
-export default function TaskItem({ task, onChangeTask, onDeleteTask }: TaskItemProps) {
+export default function TaskItem({ task }: TaskItemProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useTasksDispatch();
+
+  function change(patch: Partial<Task>) {
+    dispatch({ type: 'changed', task: { ...task, ...patch } });
+  }
 
   return (
     <li className="task-item">
@@ -19,14 +21,14 @@ export default function TaskItem({ task, onChangeTask, onDeleteTask }: TaskItemP
         <input
           type="checkbox"
           checked={task.done}
-          onChange={(e) => onChangeTask({ ...task, done: e.target.checked })}
+          onChange={(e) => change({ done: e.target.checked })}
         />
         {isEditing ? (
           <input
             type="text"
             value={task.text}
             autoFocus
-            onChange={(e) => onChangeTask({ ...task, text: e.target.value })}
+            onChange={(e) => change({ text: e.target.value })}
           />
         ) : (
           <span className={task.done ? 'done' : ''}>{task.text}</span>
@@ -37,7 +39,6 @@ export default function TaskItem({ task, onChangeTask, onDeleteTask }: TaskItemP
         task={task}
         isEditing={isEditing}
         onToggleEdit={() => setIsEditing(!isEditing)}
-        onDeleteTask={onDeleteTask}
       />
     </li>
   );
