@@ -1,11 +1,8 @@
-import type { Task } from '../types';
+import { useTasks } from '../context/TasksContext';
 
-type TaskCounterProps = {
-  tasks: Task[];
-};
-
-// ✅ Este é quem realmente PRECISA de `tasks`.
-export default function TaskCounter({ tasks }: TaskCounterProps) {
+// Pega `tasks` direto do contexto (já tipado como Task[]).
+export default function TaskCounter() {
+  const tasks = useTasks();
   const done = tasks.filter((t) => t.done).length;
   return (
     <span className="counter">
